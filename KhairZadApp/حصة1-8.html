@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار وتقييم الحصة الأولى - الأستاذ محمود جمعة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@600;700;800;900&family=Reem+Kufi:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f2042;
+            --gold: #d4af37;
+            --gold-light: #fef9e7;
+            --accent: #8b0000;
+            --whatsapp: #25D366;
+            --whatsapp-dark: #128C7E;
+            --bg: #f4f7f6;
+            --card-bg: #ffffff;
+            --border: #dcdde1;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg);
+            color: #2c3e50;
+            padding: 20px 10px;
+            line-height: 1.6;
+        }
+
+        .main-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border: 3px solid var(--primary);
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), #1a3668);
+            color: white;
+            padding: 25px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--gold);
+        }
+
+        header h1 {
+            font-family: 'Amiri', serif;
+            font-size: 2.4rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        header p {
+            color: var(--gold);
+            font-size: 1.1rem;
+            font-weight: 800;
+        }
+
+        .screen {
+            display: none;
+            padding: 25px 30px;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 18px;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 6px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        label {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+
+        input {
+            padding: 12px 15px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            outline: none;
+            background-color: #fafafa;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            background-color: #fff;
+        }
+
+        .btn-action {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary), #1a3668);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 900;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(15, 32, 66, 0.2);
+        }
+
+        .question-card {
+            background: #fff;
+            border: 2px solid var(--border);
+            border-right: 5px solid var(--primary);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 18px;
+        }
+
+        .question-card.religion {
+            border-right-color: var(--gold);
+            background: #fffdf5;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #111;
+            margin-bottom: 12px;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 10px 14px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .option-label input[type="radio"] {
+            margin-left: 10px;
+            accent-color: var(--primary);
+        }
+
+        /* تصميم شهادة التقدير */
+        .certificate-container {
+            background: #fff;
+            border: 10px solid var(--primary);
+            outline: 4px solid var(--gold);
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            margin-bottom: 25px;
+        }
+
+        .cert-header h2 {
+            font-family: 'Amiri', serif;
+            font-size: 2.2rem;
+            color: var(--primary);
+        }
+
+        .cert-title {
+            font-family: 'Reem Kufi', sans-serif;
+            font-size: 1.8rem;
+            color: var(--gold);
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .cert-body {
+            font-size: 1.15rem;
+            line-height: 1.9;
+            color: #333;
+            margin: 20px 0;
+        }
+
+        .student-name-highlight {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--accent);
+            text-decoration: underline;
+            margin: 0 5px;
+        }
+
+        .cert-footer {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 2px dashed #ccc;
+        }
+
+        .signature-box {
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        .btn-whatsapp {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--whatsapp);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 900;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+
+        footer {
+            background: #f1f5f9;
+            text-align: center;
+            padding: 12px;
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 0.85rem;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .screen { padding: 20px 15px; }
+            .cert-header h2 { font-size: 1.7rem; }
+            .cert-title { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <header>
+        <h1>خيرزاد اللغة العربية ✨</h1>
+        <p>التقييم الشامل والتشخيصي للحصة الأولى (15 سؤالاً)</p>
+    </header>
+
+    <!-- 1. شاشة البيانات -->
+    <div id="screenData" class="screen active">
+        <div class="section-title">📝 استمارة تسجيل الطالب لإصدار الشهادة:</div>
+        <form id="infoForm" onsubmit="startExam(event)">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>اسم الطالب (رباعياً):</label>
+                    <input type="text" id="studentName" placeholder="اكتب اسمك الكريِم..." required>
+                </div>
+                <div class="form-group">
+                    <label>رقم هاتف الطالب / الواتساب:</label>
+                    <input type="tel" id="studentPhone" placeholder="01xxxxxxxxx" required>
+                </div>
+                <div class="form-group">
+                    <label>رقم هاتف ولي الأمر:</label>
+                    <input type="tel" id="parentPhone" placeholder="01xxxxxxxxx" required>
+                </div>
+                <div class="form-group">
+                    <label>المجموعة ومكان الحضور:</label>
+                    <input type="text" id="groupName" placeholder="طناح / المنصورة / أونلاين..." required>
+                </div>
+            </div>
+            <button type="submit" class="btn-action">بدء التقييم التشخيصي 🚀</button>
+        </form>
+    </div>
+
+    <!-- 2. شاشة الأسئلة (15 سؤالاً) -->
+    <div id="screenExam" class="screen">
+        <form id="questionsForm" onsubmit="evaluateExam(event)">
+            <div class="section-title">🧠 أجب عن الأسئلة الـ 15 التالية للحصول على الشهادة:</div>
+
+            <!-- س1 -->
+            <div class="question-card">
+                <div class="question-text">1. الكلمة التي تُكتب بحرف (الصاد) الصحيح هي:</div>
+                <div class="options-list">
+                    <label class="option-label"><input type="radio" name="q1" value="correct" required> صَيْف</label>
+                    <label class="option-label"><input type="radio" name="q1" value="wrong"> سَيْف (بمعنى فصل الصيف)</label>
+                </div>
+            </div>
+
+            <!-- س2 -->
+            <div class="question-card">
+                <div class="question-text">2. الكلمة التي تحتوي على (مد بالألف) هي:</div>
+                <div class="options-list">
+                    <label class="option-label"><input type="radio" name="q2" value="wrong" required> أَكَلَ</label>
+                    <label class="option-label"><input type="radio" name="q2" value="correct"> كَاتِب</label>
+                </div>
+            </div>
+
+            <!-- س3 -->
+            <div class="question-card">
+                <div class="question-text">3. النطق الصحيح والتنوين عند كتابة كلمة (عصفور) منصوبة هو:</div>
+                <div class="options-list">
+                    <label class="option-label"><input type="radio" name="q3" value="wrong" required> عُصْفُورُن</label>
+                    <label class="option-label"><input type="radio" name="q3" value="correct"> عُصْفُورًا</label>
+                </div>
+            </div>
+
+            <!-- س4 -->
+            <div class="question-card">
+                <div class="question-text">4. لمعرفة هل الكلمة تنتهي بـ (تنوين) أم (نون أصلية) نضع على آخرها:</div>
+                <div class="options-list">
+                    <label class="option-label"><input type="radio" name="q4" value="correct" required> سكونًا (نقف عليها)</label>
+                    <label class="option-label"><input type="radio" name="q4" value="wrong"> شدّة</label>
+                </div>
+            </div>
+
+            <!-- س5 -->
+            <div class="question-card">
+                <div class="question-text">5. كلمة (مَدْرَسَة) تنتهي بـ:</div>
+                <div class="options-list">
+                    <label class="option-label"><input type="radio" name="q5" value="correct" required> تاء مربوطة (تنطق هاء عند السكون)</label>
+                    <label class="option-label"><input type="radio" name="q5" value="wrong"> تاء مفتوحة</label>
+                </div>
+            </div>
+
+            <!-- س6 -->
+            <div class="question-card">
+                <div class="question-text">6. كلمة (بَيْت) تنتهي بـ:</div>
+                <div class="options-list">
+                    <label class="option-label"><input type="radio" name="q6" value="correct" required> تاء مفتوحة (تنطق تاء في الوصل والوقف)</label>
+                    <label class="option-label"><input type="radio" name="q6" value="wrong"> تاء مربوطة</label>
+                </div>
+            </div>
+
+            <!-- س7 -->
+            <div class="question-card">
+                <div class="question-text">7. الحرف الذي يكتب ولا ينطق في كلمة (بِالكُرَةِ) عند إدخال الباء هو:</div>
+                <div class="options-list">
+                    <label class="option-label"><input type="radio" name="q7" value="correct" required> همزة الوصل (الألف)</label>
+                    <label class="option-label"><input type="radio" name="q7" value="wrong"> حرف الكاف</label>
+                </div>
+            </div>
+
+            <!-- س8 -->
+            <div class="question-card">
+                <div class="question-text">8. كلمة (الشَّجَرَة) نوع اللام فيها:</div>
+                <div class="options-list">
+                    <label class="option-label"><input type="radio" name="q8" value="correct" required> لام شمسية (تكتب ولا تنطق)</label>
+                    <label class="option-label"><input type="radio" name="q8" value="wrong"> لام قمرية</label>
+                </div>
+            </div>
+
+            <!-- س9 -->
+            <div class="question-card">
+                <div class="question-text">9. كلمة (أَحْمَد) تبدأ بـ:</div>
+                <div class="options-list">
+                    <label class="option-label"><input type="radio" name="q9" value="correct" required> همزة قطع (تُنطق وتُكتب)</label>
+                    <label class="option-label"><input type="radio" name="q9" value="wrong"> همزة وصل</label>
+                </div>
+            </div>
+
+            <!-- س10 -->
+            <div class="question-card">
+                <div class="question-text">10. لمعرفة نوع الهمزة (قطع أم وصل) نضع قبل الكلمة حرف:</div>
+                <div class="options-list">
+                    <label class="option-label"><input type="radio" name="q10" value="correct" required> الواو (مثل: وَأكَلَ / وَاسْتَغْفَرَ)</label>
+                    <label class="option-label"><input type="radio" name="q10" value="wrong"> السين</label>
+                </div>
+            </div>
+
+            <!-- س11 -->
+            <div class="question-card">
+                <div class="question-text">11. جملة (وَطَنِي هُوَ الأَمَانُ) تعتبر جملة:</div>
+                <div class="options-list">
+                    <label class="option-label"><input type="radio" name="q11" value="correct" required> جملة اسمية (بدأت باسم)</label>
+                    <label class="option-label"><input type="radio" name="q11" value="wrong"> جملة فعلية</label>
+                </div>
+            </div>
+
+            <!-- س12 -->
+            <div class="question-card">
+                <div class="question-text">12. جملة (يَضِيءُ النُّورُ دَرْبِي) تعتبر جملة:</div>
+                <div class="options-list">
+                    <label class="option-label"><input type="radio" name="q12" value="correct" required> جملة فعلية (بدأت بفعل)</label>
+                    <label class="option-label"><input type="radio" name="q12" value="wrong"> جملة اسمية</label>
+                </div>
+            </div>
+
+            <!-- س13 -->
+            <div class="question-card">
+                <div class="question-text">13. الفعل (يَلْعَبُ) هو فعل:</div>
+                <div class="options-list">
+                    <label class="option-label"><input type="radio" name="q13" value="correct" required> مضارع (يدل على الاستمرار)</label>
+                    <label class="option-label"><input type="radio" name="q13" value="wrong"> ماضٍ</label>
+                </div>
+            </div>
+
+            <!-- س14 -->
+            <div class="question-card">
+                <div class="question-text">14. الفعل (اعْمَلْ) هو فعل:</div>
+                <div class="options-list">
+                    <label class="option-label"><input type="radio" name="q14" value="correct" required> أمر (طلب القيام بحدث)</label>
+                    <label class="option-label"><input type="radio" name="q14" value="wrong"> مضارع</label>
+                </div>
+            </div>
+
+            <!-- س15 (سؤال التربية الدينية) -->
+            <div class="question-card religion">
+                <div class="question-text">15. 🕌 (تربية إسلامية): بداية التشهد الصحيحة التي نقولها في الصلاة هي:</div>
+                <div class="options-list">
+                    <label class="option-label"><input type="radio" name="q15" value="correct" required> «التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ»</label>
+                    <label class="option-label"><input type="radio" name="q15" value="wrong"> «الحمد لله رب العالمين»</label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-action">إنهاء التقييم واستخراج الشهادة 🎓</button>
+        </form>
+    </div>
+
+    <!-- 3. شاشة الشهادة -->
+    <div id="screenResult" class="screen">
+        <div class="certificate-container">
+            <div class="cert-header">
+                <h2>خيرزاد اللغة العربية ✨</h2>
+                <div class="cert-title">🎓 شهادة تقدير وتميز 🎓</div>
+            </div>
+            <div class="cert-body">
+                تشهد إدارة منصة **خيرزاد في اللغة العربية** بأن الطالب/ـة:<br>
+                <span class="student-name-highlight" id="certName">اسم الطالب</span><br>
+                قد أتم/ت التقييم التشخيصي الشامل للحصة الأولى بنجاح وحصل/ت على:<br>
+                درجة: <b id="certScore" style="color: var(--accent); font-size: 1.4rem;">0 من 15</b> 
+                بتقدير: <b id="certRating" style="color: var(--primary);">ممتاز</b>.
+            </div>
+            <div class="cert-footer">
+                <div class="signature-box">
+                    تاريخ التقييم:<br>
+                    <span id="certDate">-</span>
+                </div>
+                <div class="signature-box">
+                    معلم المادة:<br>
+                    <b>الأستاذ محمود جمعة ✍️</b>
+                </div>
+            </div>
+        </div>
+
+        <a id="btnSendTeacher" href="#" target="_blank" class="btn-whatsapp">
+            📱 إرسال الشهادة والنتيجة للأستاذ محمود جمعة عبر الواتساب
+        </a>
+    </div>
+
+    <footer>
+        جميع الحقوق محفوظة © للأستاذ محمود جمعة | خيرزاد اللغة العربية 2026
+    </footer>
+</div>
+
+<script>
+    // 💡 ضع رقم موبايل حضرتك هنا (سيتم ضبطه تلقائياً)
+    const MY_PHONE_NUMBER = "00201096202081"; 
+
+    let studentData = {};
+
+    function fixWhatsAppNumber(phone) {
+        let clean = phone.replace(/\D/g, ''); 
+        if (clean.startsWith('01')) clean = '2' + clean; 
+        else if (clean.startsWith('1') && clean.length === 10) clean = '20' + clean;
+        return clean;
+    }
+
+    function startExam(e) {
+        e.preventDefault();
+        studentData.name = document.getElementById('studentName').value.trim();
+        studentData.phone = document.getElementById('studentPhone').value.trim();
+        studentData.parentPhone = document.getElementById('parentPhone').value.trim();
+        studentData.group = document.getElementById('groupName').value.trim();
+
+        document.getElementById('screenData').classList.remove('active');
+        document.getElementById('screenExam').classList.add('active');
+        window.scrollTo(0, 0);
+    }
+
+    function evaluateExam(e) {
+        e.preventDefault();
+        const total = 15;
+        let correct = 0;
+
+        for (let i = 1; i <= total; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected && selected.value === "correct") correct++;
+        }
+
+        const percentage = Math.round((correct / total) * 100);
+        let rating = percentage >= 85 ? "ممتاز 🌟" : percentage >= 65 ? "جيد جداً 👍" : "يحتاج مراجعة وتدريب 📚";
+
+        const today = new Date();
+        const dateStr = today.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+
+        document.getElementById('certName').innerText = studentData.name;
+        document.getElementById('certScore').innerText = `${correct} من ${total} (${percentage}%)`;
+        document.getElementById('certRating').innerText = rating;
+        document.getElementById('certDate').innerText = dateStr;
+
+        const waMessage = `✨ *شهادة تقييم الحصة الأولى - خيرزاد اللغة العربية* ✨%0A%0A` +
+            `👤 *اسم الطالب:* ${studentData.name}%0A` +
+            `📱 *رقم الطالب:* ${studentData.phone}%0A` +
+            `👨‍👩‍👦 *رقم ولي الأمر:* ${studentData.parentPhone}%0A` +
+            `📍 *المجموعة:* ${studentData.group}%0A` +
+            `-----------------------------------%0A` +
+            `🏆 *النتيجة:* ${correct} من ${total} (${percentage}%)%0A` +
+            `🏅 *التقدير:* ${rating}%0A` +
+            `📅 *التاريخ:* ${dateStr}%0A%0A` +
+            `تم اجتياز التقييم التشخيصي وإصدار الشهادة بنجاح.`;
+
+        const teacherNum = fixWhatsAppNumber(MY_PHONE_NUMBER);
+        document.getElementById('btnSendTeacher').href = `https://wa.me/${teacherNum}?text=${waMessage}`;
+
+        document.getElementById('screenExam').classList.remove('active');
+        document.getElementById('screenResult').classList.add('active');
+        window.scrollTo(0, 0);
+    }
+</script>
+
+</body>
+</html>
