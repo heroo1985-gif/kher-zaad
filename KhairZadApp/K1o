@@ -1,0 +1,336 @@
+option>
+                        </select>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>اسم الطالب</th>
+                                    <th>الصف الدراسي</th>
+                                    <th>الشعبة</th>
+                                    <th>هاتف الطالب</th>
+                                    <th>هاتف ولي الأمر</th>
+                                    <th>تاريخ التسجيل</th>
+                                    <th>إجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="students-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- تبويبات التصفح الرئيسة -->
+            <div class="tabs-header">
+                <button class="tab-btn active" onclick="switchTab(this, 'current')"><i class="fa-solid fa-bolt"></i> حصص هذا الأسبوع</button>
+                <button class="tab-btn" onclick="switchTab(this, 'library')"><i class="fa-solid fa-book-bookmark"></i> المكتبة الرقمية (PDF)</button>
+                <button class="tab-btn" onclick="switchTab(this, 'term1')"><i class="fa-solid fa-folder-open"></i> أرشيف الترم الأول</button>
+                <button class="tab-btn" onclick="switchTab(this, 'term2')"><i class="fa-solid fa-folder-open"></i> أرشيف الترم الثاني</button>
+                <button class="tab-btn" onclick="switchTab(this, 'quran')"><i class="fa-solid fa-book-quran"></i> القرآن الكريم</button>
+                <button class="tab-btn" onclick="switchTab(this, 'extras')"><i class="fa-solid fa-lightbulb"></i> إثرائيات ومتفرقات</button>
+            </div>
+
+            <!-- فلترة الفروع المخصصة للمكتبة الرقمية -->
+            <div id="branch-filter-container" class="branch-filter-bar" style="display: none;">
+                <div class="branch-chip active" onclick="filterBySubjectBranch('all', this)">📌 جميع الفروع</div>
+                <div class="branch-chip" onclick="filterBySubjectBranch('النحو', this)">📘 النحو والقواعد</div>
+                <div class="branch-chip" onclick="filterBySubjectBranch('البلاغة والأدب', this)">📕 البلاغة والأدب</div>
+                <div class="branch-chip" onclick="filterBySubjectBranch('القراءة والنصوص', this)">📗 القراءة والنصوص</div>
+                <div class="branch-chip" onclick="filterBySubjectBranch('امتحانات PDF', this)">📙 بنك الامتحانات الورقية</div>
+                <div class="branch-chip" onclick="filterBySubjectBranch('مراجعات ختامية', this)">📓 مراجعات ليلة الامتحان</div>
+            </div>
+
+            <div id="lessons-container" class="lessons-grid"></div>
+
+            <!-- أدوات المعلم (إضافة دروس ومذكرات PDF) -->
+            <div id="admin-panel" class="admin-box">
+                <h4><i class="fa-solid fa-plus-circle"></i> إضافة محتوى / مذكرة PDF جديدة (لوحة المعلم)</h4>
+                <div class="form-grid">
+                    <input type="text" id="new-title" placeholder="عنوان الدرس أو المذكرة">
+                    <input type="text" id="new-desc" placeholder="وصف قصير للمحتوى">
+                    <input type="text" id="new-link" placeholder="رابط الدرس أو ملف الـ PDF (Drive)">
+                    
+                    <select id="new-type">
+                        <option value="link">🎥 فيديو / درس تفاعلي</option>
+                        <option value="pdf">📄 مذكرة PDF / ملف قراءة وتحميل</option>
+                    </select>
+
+                    <select id="new-subject-branch">
+                        <option value="النحو">📘 فرع النحو</option>
+                        <option value="البلاغة والأدب">📕 فرع البلاغة والأدب</option>
+                        <option value="القراءة والنصوص">📗 فرع القراءة والنصوص</option>
+                        <option value="امتحانات PDF">📙 امتحانات ورقية PDF</option>
+                        <option value="مراجعات ختامية">📓 مراجعات ختامية</option>
+                    </select>
+
+                    <select id="new-section">
+                        <option value="current">حصص هذا الأسبوع</option>
+                        <option value="library">📚 المكتبة الرقمية (PDF)</option>
+                        <option value="term1">📁 أرشيف الترم الأول</option>
+                        <option value="term2">📁 أرشيف الترم الثاني</option>
+                        <option value="quran">قسم القرآن الكريم</option>
+                        <option value="extras">قسم الإثرائيات ومتفرقات</option>
+                    </select>
+
+                    <select id="new-grade-target">
+                        <option value="الصف الأول الإعدادي">الصف الأول الإعدادي</option>
+                        <option value="الصف الثاني الإعدادي">الصف الثاني الإعدادي</option>
+                        <option value="الصف الثالث الإعدادي">الصف الثالث الإعدادي</option>
+                        <option value="الصف الأول الثانوي">الصف الأول الثانوي</option>
+                        <option value="الصف الثاني الثانوي">الصف الثاني الثانوي</option>
+                        <option value="الصف الثالث الثانوي">الصف الثالث الثانوي</option>
+                    </select>
+                </div>
+                <button class="btn btn-small" style="margin-top: 12px; background: linear-gradient(45deg, #8B5CF6, #6D28D9); color: #fff;" onclick="addNewLessonByTeacher()">نشر الدرس / المذكرة في المكتبة الآن</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- 🔻 فوتر سري أسفل الصفحة لدخول المعلم 🔻 -->
+    <footer class="teacher-footer">
+        <div class="footer-teacher-login">
+            <span style="color: #cbd5e1; font-size: 0.85rem;"><i class="fa-solid fa-lock"></i> تسجيل دخول المعلم:</span>
+            <input type="password" id="teacher-password" placeholder="أدخل كلمة المرور الخاصة بك...">
+            <button class="btn btn-small btn-teacher" onclick="teacherLogin()"><i class="fa-solid fa-key"></i> دخول</button>
+        </div>
+    </footer>
+
+    <script>
+        const TEACHER_PASSWORD = '8402'; // كلمة مرور المعلم محفوظة برمجياً فقط دون ظهورها للطلاب
+
+        let currentUser = null;
+        let activeTab = 'current';
+        let activeBranch = 'all';
+        let isTeacher = false;
+
+        let lessonsDB = JSON.parse(localStorage.getItem('khairzad_lessonsDB')) || [];
+        let studentsDB = JSON.parse(localStorage.getItem('khairzad_studentsDB')) || [];
+
+        function showScreen(screenId) {
+            document.querySelectorAll('.section-screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function openPrepRegistration() { showScreen('prep-screen'); }
+        function openSecRegistration() { showScreen('sec-screen'); }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast ' + type;
+            toast.style.display = 'block';
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        function teacherLogin() {
+            const password = document.getElementById('teacher-password').value.trim();
+            if (password === TEACHER_PASSWORD) {
+                isTeacher = true;
+                currentUser = { name: 'المعلم', isTeacher: true };
+                showToast('👨‍🏫 أهلاً بك أستاذ محمود! تم تسجيل الدخول بنجاح', 'success');
+                document.getElementById('teacher-password').value = '';
+                loadTeacherPlatform();
+            } else {
+                showToast('❌ كلمة المرور غير صحيحة!', 'error');
+            }
+        }
+
+        function loadTeacherPlatform() {
+            document.getElementById('student-platform-title').innerText = '👨‍🏫 لوحة إدارة المنصة والمكتبة الرقمية';
+            document.getElementById('student-platform-sub').innerHTML = '📚 رفع ومتابعة الدروس والملفات والطلاب';
+            
+            const badge = document.getElementById('user-type-badge');
+            badge.style.display = 'inline-block';
+            badge.innerHTML = '<span class="teacher-badge"><i class="fa-solid fa-chalkboard-user"></i> معلم</span>';
+            
+            document.getElementById('admin-panel').classList.add('visible');
+            document.getElementById('stats-panel').classList.add('visible');
+            
+            showScreen('platform-screen');
+            updateTeacherStats();
+            renderStudentsTable(studentsDB);
+            renderLessonsForTeacher('current');
+        }
+
+        function updateTeacherStats() {
+            document.getElementById('stat-students-total').innerText = studentsDB.length;
+            document.getElementById('stat-prep-count').innerText = studentsDB.filter(s => s.stage === 'إعدادي').length;
+            document.getElementById('stat-sec-count').innerText = studentsDB.filter(s => s.stage === 'ثانوي').length;
+            document.getElementById('stat-total-lessons').innerText = lessonsDB.length;
+        }
+
+        function renderStudentsTable(dataList) {
+            let tbody = document.getElementById('students-table-body');
+            tbody.innerHTML = '';
+
+            if (dataList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:#94a3b8;">لا يوجد طلاب مسجلون حتى الآن</td></tr>`;
+                return;
+            }
+
+            dataList.forEach((st, idx) => {
+                let row = `<tr>
+                    <td>${idx + 1}</td>
+                    <td><strong>${st.name}</strong></td>
+                    <td>${st.grade}</td>
+                    <td>${st.branch || '-'}</td>
+                    <td><a href="tel:${st.phone}" style="color:var(--primary-gold); text-decoration:none;"><i class="fa-solid fa-phone"></i> ${st.phone}</a></td>
+                    <td><a href="tel:${st.parentPhone}" style="color:#cbd5e1; text-decoration:none;"><i class="fa-solid fa-phone-volume"></i> ${st.parentPhone}</a></td>
+                    <td>${st.regDate}</td>
+                    <td><button class="btn btn-small btn-danger" onclick="deleteStudent(${st.id})"><i class="fa-solid fa-trash"></i></button></td>
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function filterStudents() {
+            let query = document.getElementById('search-student').value.toLowerCase().trim();
+            let selectedGrade = document.getElementById('filter-grade').value;
+
+            let filtered = studentsDB.filter(s => {
+                let matchesName = s.name.toLowerCase().includes(query);
+                let matchesGrade = (selectedGrade === 'all') || (s.grade === selectedGrade);
+                return matchesName && matchesGrade;
+            });
+
+            renderStudentsTable(filtered);
+        }
+
+        function deleteStudent(id) {
+            if (confirm('هل أنت متأكد من حذف بيانات هذا الطالب؟')) {
+                studentsDB = studentsDB.filter(s => s.id !== id);
+                localStorage.setItem('khairzad_studentsDB', JSON.stringify(studentsDB));
+                showToast('🗑️ تم حذف بيانات الطالب بنجاح', 'success');
+                updateTeacherStats();
+                filterStudents();
+            }
+        }
+
+        function exportStudentsToCSV() {
+            if (studentsDB.length === 0) {
+                showToast('⚠️ لا توجد بيانات للطلاب لتصديرها', 'error');
+                return;
+            }
+
+            let csvContent = "\uFEFFم,اسم الطالب,الصف الدراسي,الشعبة,رقم الطالب,رقم ولي الأمر,تاريخ التسجيل\n";
+            studentsDB.forEach((st, i) => {
+                csvContent += `${i+1},"${st.name}","${st.grade}","${st.branch || '-'}","${st.phone}","${st.parentPhone}","${st.regDate}"\n`;
+            });
+
+            let blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            let link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `كشف_طلاب_خيرزاد_${new Date().toLocaleDateString('ar-EG')}.csv`;
+            link.click();
+        }
+
+        function saveStudentData(e, stage) {
+            e.preventDefault();
+            isTeacher = false;
+            
+            let studentData = {
+                id: Date.now(),
+                stage: stage,
+                name: stage === 'إعدادي' ? document.getElementById('prep-name').value.trim() : document.getElementById('sec-name').value.trim(),
+                phone: stage === 'إعدادي' ? document.getElementById('prep-phone').value : document.getElementById('sec-phone').value,
+                parentPhone: stage === 'إعدادي' ? document.getElementById('prep-parent-phone').value : document.getElementById('sec-parent-phone').value,
+                grade: stage === 'إعدادي' ? document.getElementById('prep-grade').value : document.getElementById('sec-grade').value,
+                branch: stage === 'ثانوي' ? document.getElementById('sec-branch').value : '-',
+                regDate: new Date().toLocaleDateString('ar-EG')
+            };
+
+            currentUser = studentData;
+            
+            let existingIndex = studentsDB.findIndex(s => s.name === studentData.name);
+            if(existingIndex !== -1) {
+                studentsDB[existingIndex] = studentData;
+            } else {
+                studentsDB.push(studentData);
+            }
+            localStorage.setItem('khairzad_studentsDB', JSON.stringify(studentsDB));
+
+            showToast(`أهلاً بك ${currentUser.name}! تم التسجيل بنجاح ✅`, 'success');
+            loadStudentPlatform();
+        }
+
+        function quickLogin() {
+            let name = document.getElementById('quick-name').value.trim();
+            if (!name) {
+                showToast('الرجاء إدخال اسمك أولاً', 'error');
+                return;
+            }
+            let saved = studentsDB.find(s => s.name === name);
+            if (saved) {
+                currentUser = saved;
+                isTeacher = false;
+                showToast(`مرحباً بعودتك ${currentUser.name}! 👋`, 'success');
+                loadStudentPlatform();
+            } else {
+                showToast('الاسم غير مسجل، يرجى ملء استمارة التسجيل أدناه', 'error');
+            }
+        }
+
+        function loadStudentPlatform() {
+            document.getElementById('student-platform-title').innerText = `مكتبة ومنصة ${currentUser.grade}`;
+            document.getElementById('student-platform-sub').innerText = `مرحباً بك يا بطل: ${currentUser.name} | اللغة العربية`;
+            
+            document.getElementById('user-type-badge').style.display = 'none';
+            document.getElementById('admin-panel').classList.remove('visible');
+            document.getElementById('stats-panel').classList.remove('visible');
+            
+            showScreen('platform-screen');
+            renderLessons('current');
+        }
+
+        function switchTab(btn, section) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeTab = section;
+            
+            const branchFilter = document.getElementById('branch-filter-container');
+            if (section === 'library') {
+                branchFilter.style.display = 'flex';
+            } else {
+                branchFilter.style.display = 'none';
+            }
+
+            if (isTeacher) {
+                renderLessonsForTeacher(section);
+            } else {
+                renderLessons(section);
+            }
+        }
+
+        function filterBySubjectBranch(branch, chipElem) {
+            document.querySelectorAll('.branch-chip').forEach(c => c.classList.remove('active'));
+            chipElem.classList.add('active');
+            activeBranch = branch;
+            if (isTeacher) {
+                renderLessonsForTeacher(activeTab);
+            } else {
+                renderLessons(activeTab);
+            }
+        }
+
+        // 📚 عرض المحتوى للطلاب
+        function renderLessons(section) {
+            let container = document.getElementById('lessons-container');
+            container.innerHTML = '';
+
+            let filtered = lessonsDB.filter(l => {
+                let matchesSection = false;
+                if (section === 'quran' || section === 'extras') matchesSection = l.section === section;
+                else matchesSection = (l.grade === currentUser.grade && l.section === section);
+
+                let matchesBranch = (activeBranch === 'all' || section !== 'library') ? true : l.subjectBranch === activeBranch;
+                return matchesSection && matchesBranch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #94a3b8; padding: 30px;"><p>لا توجد دروس أو ملفات مرفوعة في هذا القسم حالياً.</p></div>`;
+                return;
